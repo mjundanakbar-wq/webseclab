@@ -1,0 +1,57 @@
+# WebSecLab - docker-compose.yml
+#
+# Menjalankan 3 container:
+#   - app      : PHP + Apache (aplikasi WebSecLab)
+#   - db       : MySQL (otomatis diisi dari database/webseclab.sql saat pertama kali jalan)
+#   - adminer  : antarmuka web untuk melihat/mengelola database (pengganti phpMyAdmin)
+#
+# Jalankan dengan: docker compose up -d --build
+# Lalu buka       : http://localhost:8080 (aplikasi) dan http://localhost:8081 (Adminer)
+
+services:
+  app:
+    build: .
+    container_name: webseclab_app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: webseclab_root_pw
+      DB_NAME: webseclab
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: webseclab_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: webseclab_root_pw
+      MYSQL_DATABASE: webseclab
+    ports:
+      - "3307:3306"   # opsional: akses MySQL dari luar container lewat port 3307
+    volumes:
+      - webseclab_db_data:/var/lib/mysql
+      - ./database/webseclab.sql:/docker-entrypoint-initdb.d/01-webseclab.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pwebseclab_root_pw"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    container_name: webseclab_adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+
+volumes:
+  webseclab_db_data:

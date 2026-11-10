@@ -1,0 +1,9 @@
+# WebSecLab sengaja rentan: batasi akses hanya dari komputer ini (localhost)
+# atau dari jaringan internal Docker (saat dijalankan via docker-compose, browser
+# host terlihat oleh Apache sebagai IP gateway Docker, bukan 127.0.0.1 persis).
+# Hapus/ubah baris ini HANYA jika Anda paham risikonya (mis. lab jaringan terisolasi).
+<IfModule mod_authz_core.c>
+    Require local
+    Require ip 172.16.0.0/12
+    Require ip 192.168.0.0/16
+</IfModule>
