@@ -57,18 +57,13 @@ function nav_link(string $href, string $label, bool $isActive): void
     <nav class="flex-1 space-y-1 overflow-y-auto px-3 pb-4">
         <?php nav_link(BASE_URL . '/index.php', 'Dashboard', $active === 'dashboard'); ?>
 
-        <p class="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">📚 Edukasi</p>
+        <p class="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Modul Kerentanan</p>
         <?php foreach ($modules as $key => $label): ?>
-            <?php nav_link(BASE_URL . '/edukasi.php?m=' . $key, $label, $active === 'edukasi_' . $key); ?>
-        <?php endforeach; ?>
-
-        <p class="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Modul Kerentanan (Praktik)</p>
-        <?php foreach ($modules as $key => $label): ?>
-            <?php nav_link(BASE_URL . '/modules/' . $key . '.php', $label, $active === $key); ?>
+            <?php nav_link(BASE_URL . '/modules/' . $key . '.php', $label, $active === $key || $active === 'edukasi_' . $key); ?>
         <?php endforeach; ?>
 
         <p class="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Pengaturan</p>
-        <?php nav_link(BASE_URL . '/security.php', 'Security Level', $active === 'security'); ?>
+        <?php nav_link(BASE_URL . '/security.php', 'Security & Reset Lab', $active === 'security'); ?>
     </nav>
 
     <div class="border-t border-slate-800 p-4">

@@ -31,17 +31,7 @@ return [
             'Gunakan autentikasi dua faktor (2FA) sebagai lapisan keamanan tambahan.',
             'Catat (log) dan pantau percobaan login yang gagal untuk mendeteksi pola serangan.',
         ],
-        // Khusus Brute Force isi 4 ID Video dalam bentuk Array
-        'youtube_id' => [
-            'RV8Ro9Vzs8g',
-            'ttEXgEkKKOU',
-            'l_wVmVITefg',
-            
-        ],
- 
-
-
-
+        'youtube_id' => '',
     ],
 
     'command_injection' => [

@@ -1,0 +1,11 @@
+# Hasil upload percobaan modul File Upload - jangan ikut diunggah ke GitHub
+uploads/*
+!uploads/.gitkeep
+
+# File sistem OS
+.DS_Store
+Thumbs.db
+
+# Folder editor
+.vscode/
+.idea/
