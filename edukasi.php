@@ -65,22 +65,37 @@ include __DIR__ . '/includes/header.php';
 
 <div class="mt-4 rounded-xl border border-slate-200 bg-white p-6">
     <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Video Penjelasan</h2>
-    <?php if (!empty($data['youtube_id'])): ?>
-        <div class="mt-3 aspect-video w-full overflow-hidden rounded-lg">
-            <iframe class="h-full w-full"
-                    src="https://www.youtube-nocookie.com/embed/<?= e($data['youtube_id']) ?>"
-                    title="Video edukasi: <?= e($title) ?>"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-        </div>
-    <?php else: ?>
-        <p class="mt-3 text-sm text-slate-500">
-            Belum ada video untuk modul ini. Tambahkan ID video YouTube pada
-            <code class="rounded bg-slate-100 px-1">config/education_content.php</code>
-            (field <code class="rounded bg-slate-100 px-1">youtube_id</code> pada key <code class="rounded bg-slate-100 px-1"><?= e($m) ?></code>).
-        </p>
-    <?php endif; ?>
+<?php if (!empty($data['youtube_id'])): ?>
+            <?php if (is_array($data['youtube_id'])): ?>
+                <?php foreach ($data['youtube_id'] as $yt_id): ?>
+                    <?php if (!empty($yt_id)): ?>
+                        <div class="mt-3 aspect-video w-full overflow-hidden rounded-lg">
+                            <iframe class="h-full w-full"
+                                    src="https://www.youtube-nocookie.com/embed/<?= e($yt_id) ?>"
+                                    title="Video edukasi: <?= e($title) ?>"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="mt-3 aspect-video w-full overflow-hidden rounded-lg">
+                    <iframe class="h-full w-full"
+                            src="https://www.youtube-nocookie.com/embed/<?= e($data['youtube_id']) ?>"
+                            title="Video edukasi: <?= e($title) ?>"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            <?php endif; ?>
+        <?php else: ?>
+            <p class="mt-3 text-sm text-slate-500">
+                Belum ada video untuk modul ini. Tambahkan ID video YouTube pada
+                <code class="rounded bg-slate-100 px-1">config/education_content.php</code>
+                (field <code class="rounded bg-slate-100 px-1">youtube_id</code>).
+            </p>
+        <?php endif; ?>
 </div>
 
 <div class="mt-6">
