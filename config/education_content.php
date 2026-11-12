@@ -15,7 +15,7 @@
  */
 
 return [
-    'brute_force' => [
+          'brute_force' => [
         'concept' => [
             'Brute force adalah teknik mencoba banyak kombinasi username dan password secara berurutan '
                 . 'hingga menemukan kredensial yang benar. Penyerang biasanya memakai wordlist (daftar kata/password '
@@ -31,7 +31,7 @@ return [
             'Gunakan autentikasi dua faktor (2FA) sebagai lapisan keamanan tambahan.',
             'Catat (log) dan pantau percobaan login yang gagal untuk mendeteksi pola serangan.',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['RV8Ro9Vzs8g', 'ttEXgEkKKOU', 'l_wVmVITefg'],
     ],
 
     'command_injection' => [
@@ -49,7 +49,7 @@ return [
             'Jalankan proses dengan hak akses (privilege) serendah mungkin (principle of least privilege).',
             'Gunakan API bahasa pemrograman langsung (mis. fungsi jaringan native) daripada memanggil perintah shell eksternal.',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['DL06TGmUCro'],
     ],
 
     'csrf' => [
@@ -68,7 +68,7 @@ return [
             'Gunakan atribut cookie SameSite=Strict atau SameSite=Lax untuk membatasi pengiriman cookie lintas situs.',
             'Periksa header Origin/Referer sebagai lapisan tambahan (bukan satu-satunya pertahanan).',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['PxBq8hMsb3A'],
     ],
 
     'file_upload' => [
@@ -87,7 +87,7 @@ return [
             'Re-encode/proses ulang berkas (mis. resize gambar) untuk menghilangkan payload tersembunyi.',
             'Batasi ukuran berkas dan jumlah upload per pengguna.',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['7xYI-KgkJF0'],
     ],
 
     'lfi' => [
@@ -105,7 +105,7 @@ return [
             'Nonaktifkan allow_url_include di konfigurasi PHP untuk mencegah RFI.',
             'Gunakan basename() dan validasi path untuk mencegah path traversal (../).',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['LvaB_6rU-Cc', '485YJD48GAs'],
     ],
 
     'sql_injection' => [
@@ -122,7 +122,7 @@ return [
             'Validasi dan batasi tipe data input (mis. pastikan ID harus berupa angka).',
             'Jangan menampilkan pesan error database mentah ke pengguna (mencegah error-based SQL injection).',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['Pohx-GidauE'],
     ],
 
     'xss_reflected' => [
@@ -140,7 +140,7 @@ return [
             'Jangan membuat filter berbasis blacklist kata kunci (mudah dilewati) — gunakan pendekatan escape output secara konsisten.',
             'Validasi input sesuai konteks penggunaannya (HTML, atribut, URL, JavaScript memerlukan escaping berbeda-beda).',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['uOZEukG9p3Q'],
     ],
 
     'xss_stored' => [
@@ -158,6 +158,6 @@ return [
             'Terapkan Content Security Policy (CSP) sebagai pertahanan berlapis.',
             'Gunakan HttpOnly pada cookie sesi agar tidak bisa diakses lewat JavaScript, membatasi dampak jika XSS tetap terjadi.',
         ],
-        'youtube_id' => '',
+        'youtube_ids' => ['aOgKHzo9Rdw'],
     ],
 ];
