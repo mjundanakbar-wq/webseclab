@@ -17,77 +17,76 @@
 return [
           'brute_force' => [
         'concept' => [
-            'Brute force adalah teknik mencoba banyak kombinasi username dan password secara berurutan '
-                . 'hingga menemukan kredensial yang benar. Penyerang biasanya memakai wordlist (daftar kata/password '
-                . 'umum) dan alat otomatis seperti Hydra atau Burp Suite Intruder untuk mencoba ratusan hingga '
-                . 'jutaan kombinasi dalam waktu singkat.',
+            'Serangan brute force adalah metode peretasan yang menggunakan metode coba-coba untuk membobol kata sandi, kredensial login , dan kunci enkripsi. Ini adalah taktik sederhana namun andal untuk mendapatkan akses tidak sah ke akun individu dan sistem serta jaringan organisasi. Peretas mencoba berbagai nama pengguna dan kata sandi, seringkali menggunakan komputer untuk menguji berbagai kombinasi, hingga mereka menemukan informasi login yang benar.',
             'Serangan ini berhasil karena banyak sistem login tidak membatasi jumlah percobaan, tidak memberi '
                 . 'jeda antar percobaan, dan tidak mendeteksi pola percobaan yang mencurigakan.',
         ],
         'mitigation' => [
-            'Terapkan rate limiting: batasi jumlah percobaan login dalam rentang waktu tertentu.',
-            'Kunci akun sementara (account lockout) setelah beberapa kali gagal berturut-turut.',
-            'Tambahkan CAPTCHA setelah beberapa kali percobaan gagal.',
-            'Gunakan autentikasi dua faktor (2FA) sebagai lapisan keamanan tambahan.',
-            'Catat (log) dan pantau percobaan login yang gagal untuk mendeteksi pola serangan.',
+            'Buat kata sandi yang kuat dan terdiri dari banyak karakter : Aturan dasar yang perlu diingat adalah kata sandi harus lebih dari 10 karakter dan mencakup huruf besar dan kecil, simbol, dan angka.',
+            'Gunakan frasa sandi yang rumit : Frasa sandi adalah gabungan beberapa kata atau segmen dengan karakter khusus yang membuatnya lebih sulit ditebak.',
+            'Buat aturan pembuatan kata sandi : Taktik kata sandi bagus lainnya adalah memangkas kata-kata sehingga tampak tidak masuk akal bagi orang lain yang membacanya. Misalnya, mempersingkat kata "hope" menjadi "hp" atau "blue" menjadi "bl".',
+            'Manfaatkan pengelola kata sandi (password manager) : Gunakan aplikasi ini untuk membuat dan menyimpan kata sandi yang panjang, kompleks, dan unik secara otomatis tanpa takut lupa.',
+            'Gunakan kata sandi unik: Bedakan kata sandi untuk setiap akun guna mencegah peretasan berantai (credential stuffing) jika salah satu situs mengalami kebocoran data.',
         ],
         'youtube_ids' => ['RV8Ro9Vzs8g', 'ttEXgEkKKOU', 'l_wVmVITefg'],
+        'sources' => [
+        ['title' => 'Fortinet - Apa itu Serangan Brute Force?', 'url' => 'https://www.fortinet.com/resources/cyberglossary/brute-force-attack'],
+        ],
     ],
+    
 
     'command_injection' => [
         'concept' => [
-            'Command Injection terjadi ketika aplikasi meneruskan input pengguna ke perintah sistem operasi '
-                . '(shell) tanpa validasi. Penyerang dapat menyisipkan karakter penghubung perintah seperti '
-                . '`;`, `&&`, `||`, atau `|` untuk menjalankan perintah tambahan di luar yang dimaksudkan aplikasi.',
-            'Contoh: fitur "ping alamat IP" yang menjalankan `ping ' . '127.0.0.1; cat /etc/passwd` akan menjalankan '
-                . 'dua perintah sekaligus jika input tidak difilter, memungkinkan penyerang membaca file sensitif '
-                . 'atau bahkan mengambil alih server.',
+            'Injeksi perintah OS (Command Injection) adalah celah keamanan yang memungkinkan penyerang menjalankan perintah sistem operasi secara bebas di server aplikasi, sehingga berisiko membahayakan seluruh data dan sistem yang terhubung.',
+            'Terjadi saat aplikasi meneruskan input pengguna ke perintah shell tanpa validasi. Penyerang menyisipkan karakter pemisah perintah (seperti &, &&, |, atau ;) agar server ikut mengeksekusi perintah tambahan yang disisipkan.',
         ],
         'mitigation' => [
-            'Hindari memanggil fungsi shell (shell_exec, exec, system) dengan input pengguna sama sekali jika memungkinkan.',
-            'Jika terpaksa, gunakan escapeshellarg()/escapeshellcmd() dan validasi input dengan whitelist ketat (mis. hanya format IPv4).',
-            'Jalankan proses dengan hak akses (privilege) serendah mungkin (principle of least privilege).',
-            'Gunakan API bahasa pemrograman langsung (mis. fungsi jaringan native) daripada memanggil perintah shell eksternal.',
+            'Jangan panggil perintah OS langsung : Gunakan fitur atau API bawaan bahasa pemrograman yang lebih aman daripada menjalankan perintah sistem operasi.',
+            'Validasi input dengan ketat: Jika terpaksa menggunakan input pengguna, batasi hanya pada daftar nilai yang diizinkan, angka, atau huruf dan angka (alfanumerik) tanpa spasi maupun simbol.',
+            'Hindari metode escaping: Jangan hanya menyaring karakter khusus shell, karena cara ini rawan salah dan mudah ditembus penyerang.',
         ],
         'youtube_ids' => ['DL06TGmUCro'],
+        'sources' => [
+        ['title' => 'PortSwigger - OS Command Injection', 'url' => 'https://portswigger.net/web-security/os-command-injection'],
+        ],
     ],
 
     'csrf' => [
         'concept' => [
-            'Cross-Site Request Forgery (CSRF) menipu browser korban yang sedang login agar tanpa sadar '
-                . 'mengirim permintaan (request) ke aplikasi target, misalnya mengubah password atau email. '
-                . 'Serangan ini memanfaatkan fakta bahwa browser otomatis menyertakan cookie sesi di setiap '
-                . 'permintaan ke domain yang sama.',
-            'Contoh: penyerang membuat halaman jahat berisi form tersembunyi yang otomatis submit ke '
-                . '`situs-korban.com/ubah-password`. Jika korban yang sedang login membuka halaman itu, '
-                . 'passwordnya bisa berubah tanpa sepengetahuannya.',
+            'Cross-Site Request Forgery (CSRF) adalah celah keamanan yang memaksa pengguna melakukan tindakan yang tidak diinginkan pada aplikasi web tempat mereka sedang login (seperti mengubah email, kata sandi, atau transfer dana), yang berisiko menyebabkan pengambilalihan akun penuh.',
+            'Serangan ini terjadi jika terdapat aksi sensitif yang hanya mengandalkan cookie sesi (atau kredensial otomatis lain) tanpa parameter rahasia tambahan yang sulit ditebak. Karena browser otomatis menyertakan cookie sesi ke domain terkait, penyerang dapat memicu permintaan HTTP tanpa sepengetahuan korban',
+            'Contoh: Penyerang membuat halaman web berisi form HTML tersembunyi yang otomatis mengirim permintaan POST ke /email/change (atau lewat URL GET). Saat korban yang sedang login membuka tautan jebakan tersebut, browser otomatis mengirimkan cookie sesinya sehingga email korban langsung berubah.',
         ],
         'mitigation' => [
-            'Gunakan token anti-CSRF unik per sesi/per form, dan validasi token tersebut di server sebelum memproses permintaan.',
-            'Minta konfirmasi ulang (re-authentication) untuk aksi sensitif seperti ubah password.',
-            'Gunakan atribut cookie SameSite=Strict atau SameSite=Lax untuk membatasi pengiriman cookie lintas situs.',
-            'Periksa header Origin/Referer sebagai lapisan tambahan (bukan satu-satunya pertahanan).',
+            'Gunakan dan validasi Token CSRF : Buat token yang acak, sulit ditebak (menggunakan CSPRNG), dan terikat pada sesi pengguna. Kirimkan melalui hidden field pada form POST (bukan lewat URL atau cookie) lalu wajib validasi kecocokannya di server sebelum memproses permintaan.',
+            'Terapkan pembatasan cookie SameSite yang ketat : Atur atribut SameSite=Strict secara default pada setiap cookie (atau Lax jika memang diperlukan, serta hindari None) untuk membatasi pengiriman cookie dari situs lain.',
+            'Isolasi konten yang tidak aman : Pisahkan konten atau file unggahan pengguna pada domain/situs yang berbeda dari fungsi atau data sensitif, karena kebijakan SameSite tidak melindungi dari serangan lintas asal yang berasal dari situs yang sama (same-site).',
+
         ],
         'youtube_ids' => ['PxBq8hMsb3A'],
+        'sources' => [
+        ['title' => 'PortSwigger - What is CSRF?', 'url' => 'https://portswigger.net/web-security/csrf'],
+        ],
+
     ],
 
     'file_upload' => [
         'concept' => [
-            'Unrestricted File Upload terjadi ketika aplikasi mengizinkan pengguna mengunggah berkas tanpa '
-                . 'membatasi jenis, ukuran, atau isi berkas tersebut. Penyerang dapat mengunggah web shell '
-                . '(skrip PHP berbahaya) yang, jika berhasil diakses lewat browser, memberikan kontrol penuh '
-                . 'atas server (Remote Code Execution).',
-            'Validasi yang hanya mengandalkan ekstensi nama file atau tipe MIME dari browser mudah dipalsukan, '
-                . 'karena kedua nilai itu dikirim oleh client dan bisa diubah bebas oleh penyerang.',
+            'Kerentanan unggahan file (File Upload Vulnerability) terjadi saat server web mengizinkan pengguna mengunggah file tanpa validasi memadai terhadap nama, tipe, isi, atau ukurannya. Akibatnya, penyerang dapat mengunggah file berbahaya seperti skrip sisi server (web shell) untuk mengambil alih kendali server (Remote Code Execution).',
+            'Kerentanan muncul ketika validasi file cacat atau mudah dilewati—misalnya hanya memeriksa header Content-Type, mengandalkan daftar hitam (blacklist) ekstensi yang bisa diakali (seperti .php5 atau pengaburan nama), hingga celah race condition sebelum file dihapus. Jika server dikonfigurasi untuk mengeksekusi file tersebut, penyerang cukup mengakses URL file yang diunggah untuk menjalankan perintah jarak jauh.',
         ],
         'mitigation' => [
-            'Validasi isi berkas (bukan hanya nama/ekstensi), misalnya dengan memeriksa signature file menggunakan getimagesize() untuk gambar.',
-            'Simpan berkas dengan nama acak yang dibuat server, bukan nama asli dari pengguna.',
-            'Simpan berkas di luar direktori yang bisa dieksekusi sebagai skrip, atau nonaktifkan eksekusi PHP di folder upload.',
-            'Re-encode/proses ulang berkas (mis. resize gambar) untuk menghilangkan payload tersembunyi.',
-            'Batasi ukuran berkas dan jumlah upload per pengguna.',
+            'Gunakan whitelist ekstensi : Periksa ekstensi file hanya terhadap daftar yang diizinkan (whitelist), bukan memblokir ekstensi tertentu (blacklist).',
+            'Cegah path traversal : Pastikan nama file tidak mengandung karakter direktori atau urutan penelusuran seperti ../.',
+            'Ganti nama file: Ubah nama file yang diunggah secara acak agar tidak menimpa file penting yang sudah ada di server.',
+            'Validasi di folder sementara: Jangan langsung menyimpan file ke sistem file permanen sebelum seluruh proses validasi selesai dan dinyatakan aman.',
+            'Gunakan framework yang mapan: Manfaatkan pustaka atau kerangka kerja tepercaya untuk memproses unggahan file daripada membuat mekanisme validasi manual sendiri.',
         ],
         'youtube_ids' => ['7xYI-KgkJF0'],
+        'sources' => [
+        ['title' => 'PortSwigger – File Upload Vulnerabilities', 'url' => 'https://portswigger.net/web-security/file-upload'],
+        ],
+
     ],
 
     'lfi' => [
@@ -160,4 +159,4 @@ return [
         ],
         'youtube_ids' => ['aOgKHzo9Rdw'],
     ],
-];
+]; 

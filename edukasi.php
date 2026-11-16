@@ -62,6 +62,18 @@ include __DIR__ . '/includes/header.php';
         <?php endforeach; ?>
     </ul>
 </div>
+<div class="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 p-6">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-indigo-700">Sumber Referensi</h2>
+    <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-indigo-900">
+        <?php foreach (($data['sources'] ?? []) as $src): ?>
+            <li>
+                <a href="<?= e($src['url']) ?>" target="_blank" rel="noopener noreferrer" class="font-medium underline hover:text-indigo-600">
+                    <?= e($src['title']) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 
 <div class="mt-4 rounded-xl border border-slate-200 bg-white p-6">
     <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Video Penjelasan</h2>
