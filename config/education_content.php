@@ -126,38 +126,37 @@ return [
 
     'xss_reflected' => [
         'concept' => [
-            'Cross-Site Scripting (XSS) Reflected terjadi ketika input pengguna langsung ditampilkan kembali '
-                . 'ke halaman HTML tanpa di-escape, sehingga skrip JavaScript yang disisipkan penyerang ikut '
-                . 'dieksekusi oleh browser korban. Disebut "reflected" karena payload hanya aktif dalam satu '
-                . 'kali permintaan (biasanya dikirim lewat link yang ditipu agar diklik korban).',
-            'Skrip yang berhasil dieksekusi dapat mencuri cookie sesi, melakukan aksi atas nama korban, '
-                . 'atau mengarahkan korban ke situs phishing.',
+            'Reflected Cross-Site Scripting (XSS) adalah serangan injeksi di mana aplikasi web langsung memantulkan kembali input pengguna yang belum divalidasi ke dalam respons HTTP secara real-time (tanpa disimpan di server), sehingga skrip berbahaya ikut dieksekusi di browser korban.',
+            'Penyerang menyisipkan muatan JavaScript ke dalam tautan berbahaya (misalnya pada parameter pencarian atau formulir) dan menipu korban untuk mengekliknya. Jika dijalankan, skrip tersebut dapat mencuri cookie sesi, membajak akun, atau menyuntikkan formulir login palsu (phishing).',
         ],
         'mitigation' => [
-            'Escape semua output ke konteks HTML dengan htmlspecialchars() (gunakan ENT_QUOTES).',
-            'Terapkan Content Security Policy (CSP) untuk membatasi sumber skrip yang boleh dijalankan browser.',
-            'Jangan membuat filter berbasis blacklist kata kunci (mudah dilewati) — gunakan pendekatan escape output secara konsisten.',
-            'Validasi input sesuai konteks penggunaannya (HTML, atribut, URL, JavaScript memerlukan escaping berbeda-beda).',
+            'Validasi dan bersihkan input : Terapkan daftar putih (whitelist) untuk hanya menerima karakter yang aman dan memblokir skrip berbahaya.',
+            'Lakukan pengkodean (encoding) output : Ubah karakter khusus menjadi entitas HTML agar input pengguna diperlakukan sebagai teks biasa, bukan kode yang dieksekusi.',
+            'Gunakan atribut cookie HttpOnly dan Secure: Lindungi cookie sesi agar tidak dapat diakses melalui JavaScript dan hanya dikirim lewat koneksi HTTPS.',
+            'Terapkan Content Security Policy (CSP): Batasi sumber skrip yang boleh dijalankan oleh browser untuk memblokir eksekusi JavaScript berbahaya.',
+            
         ],
         'youtube_ids' => ['uOZEukG9p3Q'],
+        'sources' => [
+           ['title' => 'Legit Security – Apa Itu Reflected XSS? Mencegah Serangan Cross-Site Scripting', 'url' => 'https://www.legitsecurity.com/aspm-knowledge-base/what-is-reflected-xss'],
+],
     ],
 
     'xss_stored' => [
         'concept' => [
-            'Cross-Site Scripting (XSS) Stored mirip dengan XSS Reflected, tetapi payload JavaScript '
-                . 'disimpan secara permanen di server (misalnya di database lewat kolom komentar atau buku tamu). '
-                . 'Setiap kali halaman tersebut dibuka oleh pengguna lain, payload yang tersimpan ikut dieksekusi '
-                . 'di browser mereka — membuat dampaknya jauh lebih luas dibanding XSS Reflected.',
-            'Karena sifatnya persisten, XSS Stored berpotensi menyerang banyak korban sekaligus tanpa perlu '
-                . 'mengirim link khusus ke tiap korban.',
+            'Reflected Cross-Site Scripting (XSS) adalah serangan injeksi di mana aplikasi web langsung memantulkan kembali input pengguna yang belum divalidasi ke dalam respons HTTP secara real-time (tanpa disimpan di server), sehingga skrip berbahaya ikut dieksekusi di browser korban.',
+            'Penyerang menyisipkan muatan JavaScript ke dalam tautan berbahaya (misalnya pada parameter pencarian atau formulir) dan menipu korban untuk mengekliknya. Jika dijalankan, skrip tersebut dapat mencuri cookie sesi, membajak akun, atau menyuntikkan formulir login palsu (phishing).',
         ],
         'mitigation' => [
-            'Escape output setiap kali data ditampilkan ke HTML, meskipun data berasal dari database sendiri (jangan percaya data tersimpan).',
-            'Sanitasi input sebelum disimpan sebagai lapisan tambahan (mis. strip_tags untuk kolom yang tidak butuh HTML).',
-            'Terapkan Content Security Policy (CSP) sebagai pertahanan berlapis.',
-            'Gunakan HttpOnly pada cookie sesi agar tidak bisa diakses lewat JavaScript, membatasi dampak jika XSS tetap terjadi.',
+            'Validasi dan bersihkan input : Terapkan daftar putih (whitelist) untuk hanya menerima karakter yang aman dan memblokir skrip berbahaya.',
+            'Lakukan pengkodean (encoding) output : Ubah karakter khusus menjadi entitas HTML agar input pengguna diperlakukan sebagai teks biasa, bukan kode yang dieksekusi.',
+            'Terapkan Content Security Policy (CSP) : Batasi sumber skrip yang boleh dijalankan oleh browser untuk memblokir eksekusi JavaScript berbahaya.',
+            'Gunakan atribut cookie HttpOnly dan Secure : Lindungi cookie sesi agar tidak dapat diakses melalui JavaScript dan hanya dikirim lewat koneksi HTTPS.',
         ],
         'youtube_ids' => ['aOgKHzo9Rdw'],
+        'sources' => [
+    ['title' => 'Imperva – Cross-Site Scripting (XSS) Attacks', 'url' => 'https://www.imperva.com/learn/application-security/cross-site-scripting-xss-attacks/'],
+],
     ],
     ];
 
